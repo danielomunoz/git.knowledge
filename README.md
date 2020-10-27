@@ -77,6 +77,30 @@
 ### Stash
 * GUARDAR CAMBIOS ACTUALES: ```git stash```
 * LISTAR LOS STASH: ```git stash list```. Se pueden tener varios, pero no es recomendable, se puede hacer todo un lío.
-* RECUPERAR CAMBIOS DE UN STASH: ```git stash pop```. Esto extrae los cambios y elimina el stash. Esto es recomendable si vamos a tener varios stashes.
+* RECUPERAR CAMBIOS DEL ÚLTIMO STASH SIN BORRARLO: ```git stash apply```
+* RECUPERAR CAMBIOS DEL ÚLTIMO STASH BORRANDO EL STASH: ```git stash pop```. Esto extrae los cambios y elimina el stash. Esto es recomendable si vamos a tener varios stashes.
+* RECUPERAR CAMBIOS DE OTRO STASH PASADO: ```git stash apply stash@{(numero del stash)}```
 * Si hay conflictos con el stash, deberemos resolverlo después de hacer el pop, y posteriormente comitear los cambios. En este punto, el stash no va a ser borrado y hay que borrarlo a mano.
-* BORRAR STASH: ```git stash drop```
+* BORRAR ÚLTIMO STASH: ```git stash drop```
+* BORRAR CUALQUIER STASH: ```git stash drop stash@{(numero del stash)}```
+* METER EN EL STASH TODOS LOS ARCHIVOS MENOS LOS QUE YA ESTÁN EN EL STAGE, O AÑADIDOS: ```git stash save --keep-index```
+* METER EN EL STASH TODOS LOS ARCHIVOS, INCLUSO LOS QUE NO ESTÁN RECIBIENDO SEGUIMIENTO: ```git stash save --include-untracked```
+* MOSTRAR STASH DETALLADAMENTE: ```git show stash [stash@{(numero del stash)}]```
+* BORRAR DEFINITIVAMENTE TODOS LOS STASH: ```git stash clear```
+
+### Rebase
+* Se utiliza para incluir ciertos commits en mi rama, que en origen no estaban, porque se crearon después de abrirme el nuevo camino.
+* HACER UN REBASE: ```git rebase (nombre de la rama a la que quiero rebasar (generalmente master))```. Después de hacer esto satisfactoriamente (si no existen conflictos), podríamos hacer un merge de la rama rebasada sin problemas.
+* Podemos hacer otro tipo de rebase, el rebase interactivo, para dar tratamiento a varios commits de nuestra propia rama (ya vemos que el rebase no sólo se utiliza para rebasar ramas ajenas). Esto significa que podemos coger los últimos cuatro commits, por ejemplo, y hacer un squash (juntarlos) de todos ellos.
+* REBASE INTERACTIVO: ```git rebase -i HEAD~4```.
+* TAMBIÉN PODEMOS HACER UN REBASE INTERACTIVO DE ALGÚN COMMIT EN PARTICULAR (para editar el mensaje, o el commit mismo): ```git rebase -i (commit hash)```
+
+## Git remote, push y pull
+* DATO IMPORTANTE: La palabra origin es el nombre que nosotros le damos al repositorio remoto. Es origin por estándar, pero podría ser otro.
+* REVISTAR REPOSITORIOS REMOTOS: ```git remote -v```.
+* DATO IMPORTANTE: El -u cuando hacemos un push o un pull, se usa para recordar la rama a la que pusheamos, para no tenerla que escribir de nuevo.
+* HACER UN PUSH A NUESTRO REPO REMOTO: ```git push origin (nombre de la rama a la que pushear)```
+* HACER PUSH DE LOS TAGS CREADOS: ```git push --tags```
+* TRAER LOS ÚLTIMOS CAMBIOS DE UNA RAMA REMOTA: ```git pull origin (nombre de la rama remota)```
+* CLONAR UN REPOSITORIO: ```git clone (dirección del repositorio remoto)```
+* DIFERENCIA ENTRE UN FETCH Y UN PULL: Básicamente, el fetch te dice que han habido cambios, pero no los trae. El pull trae dichos cambios a tu local.
